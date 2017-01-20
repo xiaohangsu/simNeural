@@ -12,4 +12,6 @@
 const static int FCL_BIAS_NUM = 1;
 const static int FCL_THETA_RANDOM_DIV = 10;
 const static double FCL_BIAS_VALUE = 1.0;
+const static double CONV_BIAS_UPPERBOUND = 1.0;
+const static double CONV_BIAS_LOWERBOUND = -1.0;
 #endif /* preDefine_h */
