@@ -23,8 +23,8 @@ public:
     virtual void backward(std::vector<Eigen::MatrixXd>& preError, std::vector<Eigen::MatrixXd>& lastTheta, int);
     virtual void descentGradient();
     
-    virtual void forwardCaculateForPoolingLayer(){};
-    virtual void backwardCaculateForPoolingLayer(){};
+    virtual void forwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>&){};
+    virtual void backwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>& preError, std::vector<Eigen::MatrixXd>& lastTheta, int){};
     
     int getKernelCol();
     int getKernelRow();
