@@ -22,14 +22,23 @@ public:
     
     std::vector<Eigen::MatrixXd>& getErrorVec();
     std::vector<Eigen::MatrixXd>& getOutputVec();
-    int& getBatch();
+    int getBatch();
+    int getOutputNum();
+    int getInputNum();
     
     virtual void forward(Eigen::MatrixXd&, int){};
     virtual void backward(Eigen::MatrixXd& preError, Eigen::MatrixXd& lastTheta, int){};
+    virtual void descentGradient(Eigen::MatrixXd&){};
+    
+    // batch virtual function
     virtual void forward(std::vector<Eigen::MatrixXd>&){};
     virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int){};
-    virtual void descentGradient(Eigen::MatrixXd&){};
+    
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&){};
+    
+    // for pooling layer
+    virtual void backward(std::vector<Eigen::MatrixXd> &preError, std::vector<Eigen::MatrixXd>& lastTheta, int) {};
+    virtual void descentGradient(){};
 private:
     int m_inputNum;
     int m_outputNum;

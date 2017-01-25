@@ -49,6 +49,14 @@ std::vector<Eigen::MatrixXd>& Layer::getOutputVec() {
     return m_output;
 }
 
-int& Layer::getBatch() {
+int Layer::getBatch() {
     return m_batch;
+}
+
+int Layer::getOutputNum() {
+    return m_outputNum;
+}
+
+int Layer::getInputNum() {
+    return m_inputNum;
 }
