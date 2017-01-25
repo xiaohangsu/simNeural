@@ -25,9 +25,11 @@ public:
     
     virtual void forwardCaculateForPoolingLayer(){};
     virtual void backwardCaculateForPoolingLayer(){};
+    
+    int getKernelCol();
+    int getKernelRow();
 private:
     int m_kernel_col;
     int m_kernel_row;
-    int m_inputNum;
 };
 #endif /* PoolingLayer_hpp */

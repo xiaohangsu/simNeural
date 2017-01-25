@@ -54,3 +54,11 @@ void PoolingLayer::descentGradient() {
         error[i].setZero();
     }
 }
+
+int PoolingLayer::getKernelCol() {
+    return m_kernel_col;
+}
+
+int PoolingLayer::getKernelRow() {
+    return m_kernel_row;
+}
