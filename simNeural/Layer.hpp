@@ -22,10 +22,10 @@ public:
     
     std::vector<Eigen::MatrixXd>& getErrorVec();
     std::vector<Eigen::MatrixXd>& getOutputVec();
-    int getBatch();
-    int getOutputNum();
-    int getInputNum();
-    
+    const int getBatch();
+    const int getOutputNum();
+    const int getInputNum();
+    const int getCount();
     virtual void forward(Eigen::MatrixXd&, int){};
     virtual void backward(Eigen::MatrixXd& preError, Eigen::MatrixXd& lastTheta, int){};
     virtual void descentGradient(Eigen::MatrixXd&){};
@@ -43,6 +43,7 @@ private:
     int m_inputNum;
     int m_outputNum;
     int m_batch;
+    int m_count;
     std::vector<Eigen::MatrixXd> m_output;
     std::vector<Eigen::MatrixXd> m_error;
     

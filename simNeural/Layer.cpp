@@ -28,6 +28,7 @@ Layer::Layer(const int t_row, const int t_col, const int t_batch, const int t_co
     m_inputNum = t_row;
     m_outputNum = t_col;
     m_batch = t_batch;
+    m_count = t_count;
     m_output = std::vector<Eigen::MatrixXd>(t_count, Eigen::MatrixXd(t_row, t_col).setZero());
     m_error = std::vector<Eigen::MatrixXd>(t_count, Eigen::MatrixXd(t_row, t_col).setZero());
 }
@@ -49,14 +50,18 @@ std::vector<Eigen::MatrixXd>& Layer::getOutputVec() {
     return m_output;
 }
 
-int Layer::getBatch() {
+const int Layer::getBatch() {
     return m_batch;
 }
 
-int Layer::getOutputNum() {
+const int Layer::getOutputNum() {
     return m_outputNum;
 }
 
-int Layer::getInputNum() {
+const int Layer::getInputNum() {
     return m_inputNum;
+}
+
+const int Layer::getCount() {
+    return m_count;
 }
