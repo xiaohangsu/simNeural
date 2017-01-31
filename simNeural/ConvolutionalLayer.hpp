@@ -21,8 +21,9 @@ public:
     virtual void forward(std::vector<Eigen::MatrixXd>&, int);
     virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int);
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&);
-    int getRow();
-    int getCol();
+    const int getRow();
+    const int getCol();
+    const int getKernelNum();
 private:
     int m_row;
     int m_col;

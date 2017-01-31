@@ -15,17 +15,16 @@ PoolingLayer::PoolingLayer(int t_kernelRow, int t_kernelCol, int t_inputRow, int
 }
 
 void PoolingLayer::forward(std::vector<Eigen::MatrixXd> &in) {
-    std::vector<Eigen::MatrixXd> output = getOutputVec();
+    std::vector<Eigen::MatrixXd> &output = getOutputVec();
     
     assert(!in.empty());
-    assert(in[0].cols() % m_kernel_col != 0 || in[0].rows() % m_kernel_row != 0);
 
     forwardCaculateForPoolingLayer(in);
 }
 
 // t_lastTheta if empty means top layer is FCLayer
 void PoolingLayer::backward(std::vector<Eigen::MatrixXd> & t_preError, std::vector<Eigen::MatrixXd> &t_lastTheta, int t_batch) {
-    std::vector<Eigen::MatrixXd> error = getErrorVec();
+    std::vector<Eigen::MatrixXd> &error = getErrorVec();
     if (t_lastTheta.empty()) {
         for (int i = 0; i < t_batch; i++) {
             error[i] = t_preError[i];
@@ -36,7 +35,7 @@ void PoolingLayer::backward(std::vector<Eigen::MatrixXd> & t_preError, std::vect
 }
 
 void PoolingLayer::descentGradient() {
-    std::vector<Eigen::MatrixXd> error = getErrorVec();
+    std::vector<Eigen::MatrixXd> &error = getErrorVec();
     int inputNum = getInputNum();
     for (int i = 0; i < inputNum; i++) {
         error[i].setZero();

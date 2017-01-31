@@ -7,29 +7,34 @@
 //
 
 #include "ConvolutionalLayer.hpp"
-
+#include <iostream>
 ConvolutionalLayer::ConvolutionalLayer(const int t_row, const int t_col, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch) : Layer(t_row - t_kernel_row + 1, t_col - t_kernel_col + 1, t_batch, t_kernel_number) {
     m_row = t_row;
     m_col = t_col;
+    m_kernel_row = t_kernel_row;
+    m_kernel_col = t_kernel_col;
+    
     m_kernel = std::vector<std::vector<Eigen::MatrixXd>>(t_kernel_number, std::vector<Eigen::MatrixXd>(t_inputNumber, Eigen::MatrixXd::Random(t_kernel_row, t_kernel_col)));
     
     m_bias = std::vector<double>(t_kernel_number, neu_alg::randomDouble(CONV_BIAS_LOWERBOUND, CONV_BIAS_UPPERBOUND));
 }
 
 void ConvolutionalLayer::forward(std::vector<Eigen::MatrixXd>& t_input, int t_in) {
-    std::vector<Eigen::MatrixXd> output = getOutputVec();
+    std::vector<Eigen::MatrixXd> &output = getOutputVec();
     
     for (int k = 0; k < m_kernel.size(); k++) {
         for (int i = 0; i < t_in; i++) {
             neu_alg::convolution(m_kernel[k][i], t_input[i], output[k]);
+            std::cout << output[k] << std::endl << std::endl;
         }
         
         output[k] = (output[k].array() + m_bias[k]).matrix();
+        std::cout << output[k] << std::endl << std::endl;
     }
 }
 
 void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int preErrorNumber) {
-    std::vector<Eigen::MatrixXd> error = getErrorVec();
+    std::vector<Eigen::MatrixXd> &error = getErrorVec();
     long preErrorRow = preError[0].rows(),
     preErrorCol = preError[0].cols();
     long thetaRow = lastTheta.rows(),
@@ -45,8 +50,8 @@ void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen:
 };
 
 void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutput) {
-    std::vector<Eigen::MatrixXd> error = getErrorVec();
-    std::vector<Eigen::MatrixXd> output = getOutputVec();
+    std::vector<Eigen::MatrixXd> &error = getErrorVec();
+    std::vector<Eigen::MatrixXd> &output = getOutputVec();
     
     int inputNumber = output.size();
     int kernelNumber = m_kernel.size();
@@ -61,3 +66,14 @@ void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutpu
     }
 };
 
+const int ConvolutionalLayer::getKernelNum() {
+    return static_cast<int>(m_kernel.size());
+}
+
+const int ConvolutionalLayer::getCol() {
+    return m_col;
+}
+
+const int ConvolutionalLayer::getRow() {
+    return m_row;
+}

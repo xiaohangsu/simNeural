@@ -13,7 +13,7 @@ MeanPoolingLayer::MeanPoolingLayer(int t_kernel_row, int t_kernel_col, int t_inp
 }
 
 void MeanPoolingLayer::forwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd> &in) {
-    std::vector<Eigen::MatrixXd> output = getOutputVec();
+    std::vector<Eigen::MatrixXd> &output = getOutputVec();
     int inputNum = getInputNum();
     int outputRow = static_cast<int>(output[0].rows());
     int outputCol = static_cast<int>(output[0].cols());
@@ -30,7 +30,7 @@ void MeanPoolingLayer::forwardCaculateForPoolingLayer(std::vector<Eigen::MatrixX
 
 void MeanPoolingLayer::backwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd> &preError, std::vector<Eigen::MatrixXd> &lastTheta, int t_batch) {
     int inputNum = getInputNum();
-    std::vector<Eigen::MatrixXd> error = getErrorVec();
+    std::vector<Eigen::MatrixXd> &error = getErrorVec();
     for (int r = 0; r < inputNum; r++) {
         for (int b = 0; b < t_batch; b++) {
             
