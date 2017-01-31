@@ -25,15 +25,13 @@ void ConvolutionalLayer::forward(std::vector<Eigen::MatrixXd>& t_input, int t_in
     for (int k = 0; k < m_kernel.size(); k++) {
         for (int i = 0; i < t_in; i++) {
             neu_alg::convolution(m_kernel[k][i], t_input[i], output[k]);
-            std::cout << output[k] << std::endl << std::endl;
         }
-        
         output[k] = (output[k].array() + m_bias[k]).matrix();
-        std::cout << output[k] << std::endl << std::endl;
     }
 }
 
 void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int preErrorNumber) {
+    
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
     long preErrorRow = preError[0].rows(),
     preErrorCol = preError[0].cols();
@@ -53,8 +51,8 @@ void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutpu
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
     std::vector<Eigen::MatrixXd> &output = getOutputVec();
     
-    int inputNumber = output.size();
-    int kernelNumber = m_kernel.size();
+    int inputNumber = static_cast<int>(output.size());
+    int kernelNumber = static_cast<int>(m_kernel.size());
     for (int e = 0; e < kernelNumber; e++) {
         for (int l = 0; l < inputNumber; l++) {
             neu_alg::conv_descent_gradient(m_learningRate, error[e], lastOutput[l], m_kernel[e][l], kernelNumber);
