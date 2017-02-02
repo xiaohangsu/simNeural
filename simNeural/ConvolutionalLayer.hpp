@@ -19,11 +19,12 @@ class ConvolutionalLayer : public Layer {
 public:
     ConvolutionalLayer(const int t_row, const int t_col, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch);
     virtual void forward(std::vector<Eigen::MatrixXd>&, int);
-    virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int);
+    virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta);
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&);
     const int getRow();
     const int getCol();
     const int getKernelNum();
+    std::vector<std::vector<Eigen::MatrixXd>>& getKernels();
 private:
     int m_row;
     int m_col;

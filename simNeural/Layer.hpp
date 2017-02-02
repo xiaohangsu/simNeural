@@ -36,8 +36,7 @@ public:
     
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&){};
     
-    // for pooling layer
-    virtual void backward(std::vector<Eigen::MatrixXd> &preError, std::vector<Eigen::MatrixXd>& lastTheta, int) {};
+
     virtual void descentGradient(){};
 private:
     int m_inputNum;

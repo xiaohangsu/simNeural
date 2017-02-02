@@ -14,23 +14,22 @@ PoolingLayer::PoolingLayer(int t_kernelRow, int t_kernelCol, int t_inputRow, int
     m_kernel_row = t_kernelRow;
 }
 
-void PoolingLayer::forward(std::vector<Eigen::MatrixXd> &in) {
-    std::vector<Eigen::MatrixXd> &output = getOutputVec();
-    
+void PoolingLayer::forward(const std::vector<Eigen::MatrixXd> &in) {
     assert(!in.empty());
 
     forwardCaculateForPoolingLayer(in);
 }
 
 // t_lastTheta if empty means top layer is FCLayer
-void PoolingLayer::backward(std::vector<Eigen::MatrixXd> & t_preError, std::vector<Eigen::MatrixXd> &t_lastTheta, int t_batch) {
+void PoolingLayer::backward(const std::vector<Eigen::MatrixXd> & t_preError, const std::vector<std::vector<Eigen::MatrixXd>> &t_lastTheta) {
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
+    int errorNum = static_cast<int>(error.size());
     if (t_lastTheta.empty()) {
-        for (int i = 0; i < t_batch; i++) {
+        for (int i = 0; i < errorNum; i++) {
             error[i] = t_preError[i];
         }
     } else {
-        backwardCaculateForPoolingLayer(t_preError, t_lastTheta, t_batch);
+        backwardCaculateForPoolingLayer(t_preError, t_lastTheta);
     }
 }
 

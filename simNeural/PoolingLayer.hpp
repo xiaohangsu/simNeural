@@ -19,16 +19,15 @@ class PoolingLayer : public Layer {
 public:
     PoolingLayer(int t_kernelRow, int t_kernelCol, int t_inputRow, int t_inputCol, int t_intputNumber, int t_batch);
     
-    virtual void forward(std::vector<Eigen::MatrixXd>&);
-    virtual void backward(std::vector<Eigen::MatrixXd>& preError, std::vector<Eigen::MatrixXd>& lastTheta, int);
+    virtual void forward(const std::vector<Eigen::MatrixXd>&);
+    virtual void backward(const std::vector<Eigen::MatrixXd>& preError, const std::vector<std::vector<Eigen::MatrixXd>>& lastTheta);
     virtual void descentGradient();
-    
-    virtual void forwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>&){};
-    virtual void backwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>& preError, std::vector<Eigen::MatrixXd>& lastTheta, int){};
     
     int getKernelCol();
     int getKernelRow();
 private:
+    virtual void forwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd>&){};
+    virtual void backwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd>& preError, const std::vector<std::vector<Eigen::MatrixXd>>& lastTheta){};
     int m_kernel_col;
     int m_kernel_row;
 };
