@@ -16,10 +16,13 @@ class MeanPoolingLayer : public PoolingLayer {
 public:
     MeanPoolingLayer(int t_kernel_row, int t_kernel_col, int t_inputRow, int t_inputCol, int t_inputNum, int t_batch);
     
-    virtual void forwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>&);
-    virtual void backwardCaculateForPoolingLayer(std::vector<Eigen::MatrixXd>& preError, std::vector<Eigen::MatrixXd>& lastTheta, int);
-
+    Eigen::MatrixXd& getTheta() {
+        return theta;
+    };
 private:
+    virtual void forwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd>&);
+    virtual void backwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd>& preError, const std::vector<std::vector<Eigen::MatrixXd>>& lastTheta);
+
     Eigen::MatrixXd theta;
 };
 
