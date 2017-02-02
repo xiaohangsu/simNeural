@@ -67,7 +67,6 @@ void smallSampleTest() {
     for (int i = 0; i < 20; i++) {
         conv1.forward(imageData, 1);
         pool1.forward(conv1.getOutputVec());
-        
         conv2.forward(pool1.getOutputVec(), 10);
         pool2.forward(conv2.getOutputVec());
         vector<MatrixXd> pool2Out = pool2.getOutputVec();
@@ -78,6 +77,40 @@ void smallSampleTest() {
         
         full1.forward(full1Input);
         full2.forward(full1.getOutput());
+
+        // backward Output
+        MatrixXd correctLabel = imageLabel.col(0);
+        full2.backwardForOutputLayer(correctLabel);
+        full1.backward(full2.getError(), full2.getTheta());
+        debug::printOutput(full2);
+        MatrixXd error = MatrixXd();
+        MatrixXd preError = full1.getError();
+        MatrixXd lastTheta = full1.getTheta();
+        MatrixXd sigmoidReverseValue = neu_alg::sigmoidReverse(full1Input);
+        
+        error = (lastTheta.leftCols(lastTheta.cols() - FCL_BIAS_NUM).transpose()) * (preError);
+        
+        error = ((error.array()) * (sigmoidReverseValue.array())).matrix();
+        
+        std::vector<MatrixXd> fullToPoolError = vector<MatrixXd>(50, MatrixXd());
+        
+        for (int i = 0; i < 50; i++) {
+            fullToPoolError[i] = MatrixXd::Map(error.block(i * 16, 0, 16, 1).data(), 4, 4);
+
+        }
+        
+        pool2.backward(fullToPoolError, vector<vector<MatrixXd>>());
+        conv2.backward(pool2.getErrorVec(), pool2.getTheta());
+        pool1.backward(conv2.getErrorVec(), conv2.getKernels());
+        conv1.backward(pool1.getErrorVec(), pool1.getTheta());
+        
+        full2.descentGradient(full1.getOutput());
+        full1.descentGradient(full1Input);
+        pool2.descentGradient();
+        conv2.descentGradient(pool1.getOutputVec());
+        pool1.descentGradient();
+        vector<MatrixXd> temp(1, imageData[0]);
+        conv1.descentGradient(temp);
     }
 
 }
