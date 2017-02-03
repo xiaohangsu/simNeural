@@ -9,7 +9,7 @@
 #include "MeanPoolingLayer.hpp"
 
 MeanPoolingLayer::MeanPoolingLayer(int t_kernel_row, int t_kernel_col, int t_inputRow, int t_inputCol, int t_inputNum, int t_batch) : PoolingLayer(t_kernel_row, t_kernel_col, t_inputRow, t_inputCol, t_inputNum, t_batch){
-    theta = Eigen::MatrixXd::Constant(t_kernel_row, t_kernel_col, 1.0); // mapping to kernel matrix
+    theta = Eigen::MatrixXd::Constant(t_kernel_row, t_kernel_col, 1.0 / (t_kernel_col * t_kernel_row)); // mapping to kernel matrix
 }
 
 void MeanPoolingLayer::forwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd> &in) {
@@ -31,7 +31,7 @@ void MeanPoolingLayer::forwardCaculateForPoolingLayer(const std::vector<Eigen::M
 void MeanPoolingLayer::backwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd> &preError, const std::vector<std::vector<Eigen::MatrixXd>> &lastTheta) {
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
     
-    int inputNum = getInputNum();
+    int inputNum = getCount();
     int preErrorRow = static_cast<int>(preError[0].rows());
     int preErrorCol = static_cast<int>(preError[0].cols());
     int lastThetaRow = static_cast<int>(lastTheta[0][0].rows());

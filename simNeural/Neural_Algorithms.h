@@ -12,6 +12,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <iostream>
 #include <Eigen/Dense>
 
 namespace neu_alg {
@@ -62,6 +63,7 @@ namespace neu_alg {
         for (int r = 0; r < resultRow; r++) {
             for (int c = 0; c < resultCol; c++) {
                 result(r, c) -= lr * (in1.array() * in2.block(r, c, in1.rows(), in1.cols()).array()).sum() / kernel_size;
+                //std::cout << lr * (in1.array() * in2.block(r, c, in1.rows(), in1.cols()).array()).sum() / kernel_size << std::endl;
             }
         }
     }

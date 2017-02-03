@@ -9,7 +9,6 @@
 #include "FullConnectionLayer.hpp"
 #include "preDefine.h"
 #include "Neural_Algorithms.h"
-#include <iostream>
 FullConnectionLayer::FullConnectionLayer() : Layer() {
     
 };
@@ -56,7 +55,6 @@ void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {
     Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());
     input << t_input, FCL_BIAS_VALUE;
     m_theta -= (m_learningRate * (error * input.transpose()));
-    
     error.setZero();
 }
 

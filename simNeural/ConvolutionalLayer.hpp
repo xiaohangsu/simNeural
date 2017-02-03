@@ -25,6 +25,7 @@ public:
     const int getCol();
     const int getKernelNum();
     std::vector<std::vector<Eigen::MatrixXd>>& getKernels();
+    void setLearningRate(double lr) {m_learningRate = lr;};
 private:
     int m_row;
     int m_col;
