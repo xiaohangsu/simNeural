@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include "Layer.hpp"
 #include "Neural_Algorithms.h"
-
 class FullConnectionLayer : public Layer {
 public:
     FullConnectionLayer();

@@ -35,9 +35,11 @@ void PoolingLayer::backward(const std::vector<Eigen::MatrixXd> & t_preError, con
 
 void PoolingLayer::descentGradient() {
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
-    int inputNum = getInputNum();
+    std::vector<Eigen::MatrixXd> &output = getOutputVec();
+    int inputNum = getCount();
     for (int i = 0; i < inputNum; i++) {
         error[i].setZero();
+        output[i].setZero();
     }
 }
 

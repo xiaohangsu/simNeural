@@ -26,13 +26,13 @@ public:
     const int getOutputNum();
     const int getInputNum();
     const int getCount();
-    virtual void forward(Eigen::MatrixXd&, int){};
-    virtual void backward(Eigen::MatrixXd& preError, Eigen::MatrixXd& lastTheta, int){};
+    virtual void forward(Eigen::MatrixXd&){};
+    virtual void backward(Eigen::MatrixXd& preError, Eigen::MatrixXd& lastTheta){};
     virtual void descentGradient(Eigen::MatrixXd&){};
     
     // batch virtual function
     virtual void forward(std::vector<Eigen::MatrixXd>&){};
-    virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta, int){};
+    virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta){};
     
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&){};
     

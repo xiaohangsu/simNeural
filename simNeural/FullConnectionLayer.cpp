@@ -9,6 +9,7 @@
 #include "FullConnectionLayer.hpp"
 #include "preDefine.h"
 #include "Neural_Algorithms.h"
+#include "SigmoidLayer.hpp"
 FullConnectionLayer::FullConnectionLayer() : Layer() {
     
 };
@@ -28,6 +29,7 @@ Eigen::MatrixXd& FullConnectionLayer::getTheta() {
  input = t_input + bias
  forward computing: Theta * input -> output
 */
+
 void FullConnectionLayer::forward(Eigen::MatrixXd &t_input) {
     Eigen::MatrixXd& output = getOutput();
     Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());
@@ -35,9 +37,8 @@ void FullConnectionLayer::forward(Eigen::MatrixXd &t_input) {
 
     output = m_theta * input;
 
-    neu_alg::sigmoid(output);
+    SigmoidLayer::activate(output);
 }
-
 void FullConnectionLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd& t_lastTheta) {
     Eigen::MatrixXd& error = getError();
     Eigen::MatrixXd& output = getOutput();
@@ -46,7 +47,7 @@ void FullConnectionLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd&
     
     error = (t_lastTheta.leftCols(t_lastTheta.cols() - FCL_BIAS_NUM).transpose()) * (t_preError);
     
-    error = ((error.array()) * (sigmoidReverseValue.array())).matrix();
+    SigmoidLayer::deactivate(output, error);
 }
 
 void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {

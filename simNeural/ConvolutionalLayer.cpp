@@ -7,15 +7,22 @@
 //
 
 #include "ConvolutionalLayer.hpp"
+#include "SigmoidLayer.hpp"
 #include <iostream>
-ConvolutionalLayer::ConvolutionalLayer(const int t_row, const int t_col, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch) : Layer(t_row - t_kernel_row + 1, t_col - t_kernel_col + 1, t_batch, t_kernel_number) {
-    m_row = t_row;
-    m_col = t_col;
+ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCol, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch) : Layer(t_inputRow - t_kernel_row + 1, t_inputCol - t_kernel_col + 1, t_batch, t_kernel_number) {
+    m_row = t_inputRow;
+    m_col = t_inputCol;
     m_kernel_row = t_kernel_row;
     m_kernel_col = t_kernel_col;
     
-    m_kernel = std::vector<std::vector<Eigen::MatrixXd>>(t_kernel_number, std::vector<Eigen::MatrixXd>(t_inputNumber, Eigen::MatrixXd::Random(t_kernel_row, t_kernel_col)));
-    
+    for (int i = 0; i < t_kernel_number; i++) {
+        std::vector<Eigen::MatrixXd> temp;
+        for (int j = 0; j < t_inputNumber; j++) {
+            temp.push_back(Eigen::MatrixXd::Random(t_kernel_row, t_kernel_col) / 10.0);
+        }
+        
+        m_kernel.push_back(temp);
+    }
     m_bias = std::vector<double>(t_kernel_number, neu_alg::randomDouble(CONV_BIAS_LOWERBOUND, CONV_BIAS_UPPERBOUND));
 }
 
@@ -28,23 +35,25 @@ void ConvolutionalLayer::forward(std::vector<Eigen::MatrixXd>& t_input, int t_in
         }
         output[k] = (output[k].array() + m_bias[k]).matrix();
     }
+    SigmoidLayer::activate(output);
 }
 
 void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta) {
     
     std::vector<Eigen::MatrixXd> &error = getErrorVec();
-    long preErrorRow = preError[0].rows(),
-    preErrorCol = preError[0].cols();
-    long thetaRow = lastTheta.rows(),
-    thetaCol = lastTheta.cols();
-    int preErrorNumber = static_cast<int>(preError.size());
-    for (int e = 0; e < preErrorNumber; e++) {
+    int preErrorRow = static_cast<int>(preError[0].rows()),
+    preErrorCol = static_cast<int>(preError[0].cols());
+    int thetaRow = static_cast<int>(lastTheta.rows()),
+    thetaCol = static_cast<int>(lastTheta.cols());
+    
+    for (int e = 0; e < m_kernel.size(); e++) {
         for (int r = 0; r < preErrorRow; r++) {
             for (int c = 0; c < preErrorCol; c++) {
                 (error[e]).block(r * thetaRow, c * thetaCol, thetaRow, thetaCol) = Eigen::MatrixXd::Constant(thetaRow, thetaCol, (preError[e])(r, c) / (preErrorCol * preErrorRow));
             }
         }
     }
+    SigmoidLayer::deactivate(getOutputVec(), error);
 };
 
 void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutput) {
@@ -55,12 +64,13 @@ void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutpu
     int kernelNumber = static_cast<int>(m_kernel.size());
     for (int e = 0; e < kernelNumber; e++) {
         for (int l = 0; l < inputNumber; l++) {
-            neu_alg::conv_descent_gradient(m_learningRate, error[e], lastOutput[l], m_kernel[e][l], kernelNumber);
+
+            neu_alg::conv_descent_gradient(m_learningRate, error[e], lastOutput[l], m_kernel[e][l], m_kernel_col * m_kernel_row);
+
         }
-        m_bias[e] -= m_learningRate * error[e].sum();
-        
-        (error[e]).setZero();
-        (output[e]).setZero();
+        m_bias[e] += error[e].sum() * m_learningRate;
+        error[e].setZero();
+        output[e].setZero();
     }
 };
 
