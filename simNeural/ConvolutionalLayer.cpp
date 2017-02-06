@@ -53,7 +53,7 @@ void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen:
             }
         }
     }
-    SigmoidLayer::deactivate(getOutputVec(), error);
+    SigmoidLayer::deactivate(getOutputVec(),error);
 };
 
 void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutput) {
@@ -68,7 +68,7 @@ void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutpu
             neu_alg::conv_descent_gradient(m_learningRate, error[e], lastOutput[l], m_kernel[e][l], m_kernel_col * m_kernel_row);
 
         }
-        m_bias[e] += error[e].sum() * m_learningRate;
+        m_bias[e] -= error[e].sum() * m_learningRate;
         error[e].setZero();
         output[e].setZero();
     }

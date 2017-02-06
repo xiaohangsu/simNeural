@@ -25,7 +25,7 @@ namespace neu_alg {
     }
     
     static double randomDouble(double downBound, double upBound) {
-        int randNum = (double) rand() / RAND_MAX;
+        double randNum = (double) rand() / RAND_MAX;
         return downBound + randNum * (upBound - downBound);
     }
     
@@ -62,7 +62,7 @@ namespace neu_alg {
 
         for (int r = 0; r < resultRow; r++) {
             for (int c = 0; c < resultCol; c++) {
-                result(r, c) += lr * (in1.array() * in2.block(r, c, in1.rows(), in1.cols()).array()).sum() / kernel_size;
+                result(r, c) -= lr * (in1.array() * in2.block(r, c, in1.rows(), in1.cols()).array()).sum() / kernel_size;
             }
         }
     }

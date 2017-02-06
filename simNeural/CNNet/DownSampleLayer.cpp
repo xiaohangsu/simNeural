@@ -112,7 +112,6 @@ void DownSampleLayer::descentGradient(MatrixXd *x) {
 	for (int i = 0; i < inputNumber; i++) {
 		(error[i]).setZero();
 	}
-	//std::cout << "DownSampleLayer::descentGradient(MatrixXd *x, int n)" << std::endl;
 }
 
 

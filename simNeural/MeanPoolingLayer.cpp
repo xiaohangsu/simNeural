@@ -7,9 +7,11 @@
 //
 
 #include "MeanPoolingLayer.hpp"
+#include "SigmoidLayer.hpp"
 #include <iostream>
 MeanPoolingLayer::MeanPoolingLayer(int t_kernel_row, int t_kernel_col, int t_inputRow, int t_inputCol, int t_inputNum, int t_batch) : PoolingLayer(t_kernel_row, t_kernel_col, t_inputRow, t_inputCol, t_inputNum, t_batch){
-    theta = Eigen::MatrixXd::Constant(t_kernel_row, t_kernel_col, 1.0); // mapping to kernel matrix
+    theta = Eigen::MatrixXd::Constant(t_kernel_row, t_kernel_col, 1.0 / (t_kernel_col * t_kernel_row)); // mapping to kernel matrix
+
 }
 
 void MeanPoolingLayer::forwardCaculateForPoolingLayer(const std::vector<Eigen::MatrixXd> &in) {
@@ -22,7 +24,7 @@ void MeanPoolingLayer::forwardCaculateForPoolingLayer(const std::vector<Eigen::M
     for (int i = 0; i < inputNum; i++) {
         for (int r = 0; r < outputRow; r++) {
             for (int c = 0; c < outputCol; c++) {
-                output[i](r, c) = ((in[i].block(r * row, c * col, row, col)) * theta).mean();
+                output[i](r, c) = ((in[i].block(r * row, c * col, row, col)).array() * theta.array()).sum();
             }
         }
     }

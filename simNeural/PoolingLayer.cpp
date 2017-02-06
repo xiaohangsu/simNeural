@@ -7,7 +7,6 @@
 //
 
 #include "PoolingLayer.hpp"
-
 PoolingLayer::PoolingLayer(int t_kernelRow, int t_kernelCol, int t_inputRow, int t_inputCol, int t_inputNumber, int t_batch) : Layer (t_inputRow / t_kernelRow, t_inputCol / t_kernelCol, t_batch, t_inputNumber) {
     
     m_kernel_col = t_kernelCol;
@@ -18,6 +17,7 @@ void PoolingLayer::forward(const std::vector<Eigen::MatrixXd> &in) {
     assert(!in.empty());
 
     forwardCaculateForPoolingLayer(in);
+    
 }
 
 // t_lastTheta if empty means top layer is FCLayer
