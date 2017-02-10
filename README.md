@@ -6,18 +6,21 @@ Simple Neural Network implemented by C++
 
 ## Layer
 
-> ###Layer
-> > #### FullConnectionLayer</br>
-> > #### PoolingLayer
-> > > #####MeanPoolingLayer
-> >
-> > #### ConvolutionalLayer
+
+> #### FullConnectionLayer</br>
+> #### PoolingLayer
+> > #####MeanPoolingLayer
+>
+> #### ConvolutionalLayer
+> 
+> #### ActivateLayer
+> > ##### SigmoidLayer
+> > ##### ReluLayer
 
 
 ## ToDo
-* Backforward and descentGraident test
 * Convolutional Layer add stride
-* adstract sigmoid layer **||** tanh layer **||** relu layer
+* tanh Activate Layer 
 * add Data Transfer Layer form pooling to FCN
-
+* Dropout Layer
 
