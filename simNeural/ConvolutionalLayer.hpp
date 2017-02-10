@@ -13,6 +13,7 @@
 #include <vector>
 #include "Layer.hpp"
 #include "Neural_Algorithms.h"
+#include "ActivateLayer.hpp"
 #include "preDefine.h"
 
 class ConvolutionalLayer : public Layer {
@@ -26,6 +27,7 @@ public:
     const int getKernelNum();
     std::vector<std::vector<Eigen::MatrixXd>>& getKernels();
     void setLearningRate(double lr) {m_learningRate = lr;};
+    void setActivateLayer(ACTIVATE_TYPE t_TYPE);
 private:
     int m_row;
     int m_col;
@@ -34,6 +36,7 @@ private:
     std::vector<std::vector<Eigen::MatrixXd>> m_kernel;
     std::vector<double> m_bias;
     double m_learningRate;
+    ActivateLayer *m_activateLayer;
 };
 
 #endif /* ConvolutionalLayer_hpp */

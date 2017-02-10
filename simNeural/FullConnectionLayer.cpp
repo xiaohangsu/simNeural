@@ -10,6 +10,7 @@
 #include "preDefine.h"
 #include "Neural_Algorithms.h"
 #include "SigmoidLayer.hpp"
+#include "ReluLayer.hpp"
 FullConnectionLayer::FullConnectionLayer() : Layer() {
     
 };
@@ -37,17 +38,16 @@ void FullConnectionLayer::forward(Eigen::MatrixXd &t_input) {
 
     output = m_theta * input;
 
-    SigmoidLayer::activate(output);
+    m_activateLayer->activate(output);
 }
 void FullConnectionLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd& t_lastTheta) {
     Eigen::MatrixXd& error = getError();
     Eigen::MatrixXd& output = getOutput();
     
-    Eigen::MatrixXd sigmoidReverseValue = neu_alg::sigmoidReverse(output);
-    
     error = (t_lastTheta.leftCols(t_lastTheta.cols() - FCL_BIAS_NUM).transpose()) * (t_preError);
-    
-    SigmoidLayer::deactivate(output, error);
+    std::cout << error << std::endl << std::endl;
+    m_activateLayer->deactivate(output, error);
+    std::cout << error << std::endl << std::endl;
 }
 
 void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {
@@ -55,14 +55,14 @@ void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {
     
     Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());
     input << t_input, FCL_BIAS_VALUE;
-    m_theta -= (m_learningRate * (error * input.transpose()));
+    m_theta += (m_learningRate * (error * input.transpose()));
     error.setZero();
 }
 
 void FullConnectionLayer::backwardForOutputLayer(Eigen::MatrixXd &standOutput) {
     Eigen::MatrixXd& error = getError();
     Eigen::MatrixXd& output = getOutput();
-    error = output - standOutput;
+    error = (standOutput - output);
 }
 
 const int FullConnectionLayer::getRow() {
@@ -72,3 +72,17 @@ const int FullConnectionLayer::getRow() {
 const int FullConnectionLayer::getCol() {
     return m_col;
 }
+
+void FullConnectionLayer::setActivateLayer(ACTIVATE_TYPE t_TYPE) {
+    switch (t_TYPE) {
+        case SIGMOID:
+            m_activateLayer = new SigmoidLayer();
+            break;
+        case RELU:
+            m_activateLayer = new ReluLayer();
+            break;
+        default:
+            break;
+    }
+}
+

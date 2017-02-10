@@ -7,7 +7,9 @@
 //
 
 #include "ConvolutionalLayer.hpp"
+#include "ReluLayer.hpp"
 #include "SigmoidLayer.hpp"
+
 #include <iostream>
 ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCol, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch) : Layer(t_inputRow - t_kernel_row + 1, t_inputCol - t_kernel_col + 1, t_batch, t_kernel_number) {
     m_row = t_inputRow;
@@ -23,7 +25,10 @@ ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCo
         
         m_kernel.push_back(temp);
     }
-    m_bias = std::vector<double>(t_kernel_number, neu_alg::randomDouble(CONV_BIAS_LOWERBOUND, CONV_BIAS_UPPERBOUND));
+    for (int i = 0; i < t_kernel_number; i++) {
+        m_bias.push_back(neu_alg::randomDouble(CONV_BIAS_LOWERBOUND, CONV_BIAS_UPPERBOUND));
+    }
+
 }
 
 void ConvolutionalLayer::forward(std::vector<Eigen::MatrixXd>& t_input, int t_in) {
@@ -35,7 +40,7 @@ void ConvolutionalLayer::forward(std::vector<Eigen::MatrixXd>& t_input, int t_in
         }
         output[k] = (output[k].array() + m_bias[k]).matrix();
     }
-    SigmoidLayer::activate(output);
+    m_activateLayer->activate(output);
 }
 
 void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta) {
@@ -49,11 +54,11 @@ void ConvolutionalLayer::backward(std::vector<Eigen::MatrixXd>& preError, Eigen:
     for (int e = 0; e < m_kernel.size(); e++) {
         for (int r = 0; r < preErrorRow; r++) {
             for (int c = 0; c < preErrorCol; c++) {
-                (error[e]).block(r * thetaRow, c * thetaCol, thetaRow, thetaCol) = Eigen::MatrixXd::Constant(thetaRow, thetaCol, (preError[e])(r, c) / (preErrorCol * preErrorRow));
+                error[e].block(r * thetaRow, c * thetaCol, thetaRow, thetaCol) = Eigen::MatrixXd::Constant(thetaRow, thetaCol, (preError[e])(r, c) / (thetaRow * thetaCol));
             }
         }
     }
-    SigmoidLayer::deactivate(getOutputVec(),error);
+    m_activateLayer->deactivate(getOutputVec(), error);
 };
 
 void ConvolutionalLayer::descentGradient(std::vector<Eigen::MatrixXd>& lastOutput) {
@@ -88,4 +93,17 @@ const int ConvolutionalLayer::getRow() {
 
 std::vector<std::vector<Eigen::MatrixXd>>& ConvolutionalLayer::getKernels() {
     return m_kernel;
+}
+
+void ConvolutionalLayer::setActivateLayer(ACTIVATE_TYPE t_TYPE) {
+    switch (t_TYPE) {
+        case SIGMOID:
+            m_activateLayer = new SigmoidLayer();
+            break;
+        case RELU:
+            m_activateLayer = new ReluLayer();
+            break;
+        default:
+            break;
+    }
 }

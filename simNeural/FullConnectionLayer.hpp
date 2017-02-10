@@ -11,7 +11,9 @@
 
 #include <stdio.h>
 #include "Layer.hpp"
+#include "predefine.h"
 #include "Neural_Algorithms.h"
+#include "ActivateLayer.hpp"
 class FullConnectionLayer : public Layer {
 public:
     FullConnectionLayer();
@@ -23,11 +25,13 @@ public:
     void backwardForOutputLayer(Eigen::MatrixXd& standOutput);
     const int getRow();
     const int getCol();
+    void setActivateLayer(ACTIVATE_TYPE t_TYPE);
 private:
     Eigen::MatrixXd m_theta;
     int m_row;
     int m_col;
     double m_learningRate;
+    ActivateLayer *m_activateLayer;
 };
 
 #endif /* FullConnectionLayer_hpp */

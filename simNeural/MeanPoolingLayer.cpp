@@ -9,6 +9,7 @@
 #include "MeanPoolingLayer.hpp"
 #include "SigmoidLayer.hpp"
 #include <iostream>
+#include "Neural_Algorithms.h"
 MeanPoolingLayer::MeanPoolingLayer(int t_kernel_row, int t_kernel_col, int t_inputRow, int t_inputCol, int t_inputNum, int t_batch) : PoolingLayer(t_kernel_row, t_kernel_col, t_inputRow, t_inputCol, t_inputNum, t_batch){
     theta = Eigen::MatrixXd::Constant(t_kernel_row, t_kernel_col, 1.0 / (t_kernel_col * t_kernel_row)); // mapping to kernel matrix
 
@@ -21,6 +22,7 @@ void MeanPoolingLayer::forwardCaculateForPoolingLayer(const std::vector<Eigen::M
     int outputCol = static_cast<int>(output[0].cols());
     int row = getKernelRow();
     int col = getKernelCol();
+    
     for (int i = 0; i < inputNum; i++) {
         for (int r = 0; r < outputRow; r++) {
             for (int c = 0; c < outputCol; c++) {
@@ -38,19 +40,14 @@ void MeanPoolingLayer::backwardCaculateForPoolingLayer(const std::vector<Eigen::
     int preErrorCol = static_cast<int>(preError[0].cols());
     int lastThetaRow = static_cast<int>(lastTheta[0][0].rows());
     int lastThetaCol = static_cast<int>(lastTheta[0][0].cols());
-    int errorRow = static_cast<int>(error[0].cols());
-    int errorCol = static_cast<int>(error[0].rows());
     int outputNum = static_cast<int>(preError.size());
 
     for (int k = 0; k < inputNum; k++) {
         for (int b = 0; b < outputNum; b++) {
-            Eigen::MatrixXd paddingMatrix = Eigen::MatrixXd(preErrorRow + 2 * (lastThetaRow - 1), preErrorCol + 2 * (lastThetaCol - 1)).setZero();
+            Eigen::MatrixXd paddingMatrix = Eigen::MatrixXd(preErrorRow + 2 * (lastThetaRow) - 1, preErrorCol + 2 * (lastThetaCol) - 1).setZero();
             paddingMatrix.block(lastThetaRow - 1, lastThetaCol - 1, preErrorRow, preErrorCol) = preError[b];
-            for (int r = 0; r < errorRow; r++) {
-                for (int c = 0; c < errorCol; c++) {
-                    error[k](r, c) += (lastTheta[b][k].array().reverse() * paddingMatrix.block(r, c, lastThetaRow, lastThetaCol).array()).sum();
-                }
-            }
+            Eigen::MatrixXd lastThetaReverse = lastTheta[b][k].reverse();
+            neu_alg::convolution(lastThetaReverse, paddingMatrix, error[k]);
         }
     }
 }

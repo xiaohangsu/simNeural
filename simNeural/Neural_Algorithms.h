@@ -13,6 +13,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
 #include <Eigen/Dense>
 
 namespace neu_alg {
@@ -25,6 +27,7 @@ namespace neu_alg {
     }
     
     static double randomDouble(double downBound, double upBound) {
+
         double randNum = (double) rand() / RAND_MAX;
         return downBound + randNum * (upBound - downBound);
     }
