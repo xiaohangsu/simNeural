@@ -6,8 +6,7 @@ Simple Neural Network implemented by C++
 
 ## Layer
 
-
-> #### FullConnectionLayer</br>
+> #### FullConnectionLayer
 > #### PoolingLayer
 > > #####MeanPoolingLayer
 >

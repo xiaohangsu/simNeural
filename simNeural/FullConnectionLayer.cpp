@@ -45,9 +45,7 @@ void FullConnectionLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd&
     Eigen::MatrixXd& output = getOutput();
     
     error = (t_lastTheta.leftCols(t_lastTheta.cols() - FCL_BIAS_NUM).transpose()) * (t_preError);
-    std::cout << error << std::endl << std::endl;
     m_activateLayer->deactivate(output, error);
-    std::cout << error << std::endl << std::endl;
 }
 
 void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {
