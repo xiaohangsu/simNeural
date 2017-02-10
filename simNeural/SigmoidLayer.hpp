@@ -10,16 +10,17 @@
 #define SigmoidLayer_hpp
 
 #include <stdio.h>
-#include <vector>
-#include <Eigen/Dense>
-class SigmoidLayer{
+#include "ActivateLayer.hpp"
+
+class SigmoidLayer : public ActivateLayer {
 public:
-    static void activate(Eigen::MatrixXd&);
-    static void activate(std::vector<Eigen::MatrixXd>&);
+    SigmoidLayer();
+    virtual void activate(Eigen::MatrixXd&);
+    virtual void activate(std::vector<Eigen::MatrixXd>&);
     
-    static void deactivate(Eigen::MatrixXd&, Eigen::MatrixXd&);
-    static void deactivate(std::vector<Eigen::MatrixXd>&, std::vector<Eigen::MatrixXd>&);
-    static void deactivate(std::vector<Eigen::MatrixXd>&);
+    virtual void deactivate(Eigen::MatrixXd&, Eigen::MatrixXd&);
+    virtual void deactivate(std::vector<Eigen::MatrixXd>&, std::vector<Eigen::MatrixXd>&);
+    virtual void deactivate(std::vector<Eigen::MatrixXd>&);
 };
 
 #endif /* SigmoidLayer_hpp */

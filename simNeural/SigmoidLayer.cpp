@@ -8,6 +8,10 @@
 
 #include "SigmoidLayer.hpp"
 
+SigmoidLayer::SigmoidLayer() {
+    
+}
+
 void SigmoidLayer::activate(Eigen::MatrixXd &t_input) {
     t_input = (1 / (1 + (-1 * t_input.array()).exp())).matrix();
 }
