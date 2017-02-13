@@ -28,6 +28,7 @@ public:
     std::vector<std::vector<Eigen::MatrixXd>>& getKernels();
     void setLearningRate(double lr) {m_learningRate = lr;};
     void setActivateLayer(ACTIVATE_TYPE t_TYPE);
+    ActivateLayer getActivateLayer();
 private:
     int m_row;
     int m_col;

@@ -26,6 +26,7 @@ public:
     const int getRow();
     const int getCol();
     void setActivateLayer(ACTIVATE_TYPE t_TYPE);
+    ActivateLayer getActivateLayer();
 private:
     Eigen::MatrixXd m_theta;
     int m_row;

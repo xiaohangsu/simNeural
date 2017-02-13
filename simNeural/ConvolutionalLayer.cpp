@@ -107,3 +107,7 @@ void ConvolutionalLayer::setActivateLayer(ACTIVATE_TYPE t_TYPE) {
             break;
     }
 }
+
+ActivateLayer ConvolutionalLayer::getActivateLayer() {
+    return *m_activateLayer;
+}

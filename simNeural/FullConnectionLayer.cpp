@@ -84,3 +84,7 @@ void FullConnectionLayer::setActivateLayer(ACTIVATE_TYPE t_TYPE) {
     }
 }
 
+ActivateLayer FullConnectionLayer::getActivateLayer() {
+    return *m_activateLayer;
+}
+
