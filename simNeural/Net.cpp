@@ -6,6 +6,8 @@
 //
 //
 
+
+// to do
 #include "Net.hpp"
 
 Net::Net() {
@@ -13,9 +15,7 @@ Net::Net() {
 };
 
 Net::Net(const std::vector<int>& t_params, const int t_batch, const double t_lr) {
-    for (int i = 0; i < t_params.size() - 1; i++) {
-        m_layers.push_back(FullConnectionLayer(t_params[i], t_params[i + 1], t_lr, t_batch));
-    }
+
 }
 
 
