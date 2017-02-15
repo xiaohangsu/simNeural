@@ -26,11 +26,10 @@ Eigen::MatrixXd& FullConnectionLayer::getTheta() {
     return m_theta;
 }
 
-/*
- input = t_input + bias
- forward computing: Theta * input -> output
-*/
-
+//
+// input = t_input + bias
+// forward computing: Theta * input -> output
+//
 void FullConnectionLayer::forward(Eigen::MatrixXd &t_input) {
     Eigen::MatrixXd& output = getOutput();
     Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());

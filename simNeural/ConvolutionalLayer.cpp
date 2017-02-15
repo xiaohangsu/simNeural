@@ -20,9 +20,8 @@ ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCo
     for (int i = 0; i < t_kernel_number; i++) {
         std::vector<Eigen::MatrixXd> temp;
         for (int j = 0; j < t_inputNumber; j++) {
-            temp.push_back(Eigen::MatrixXd::Random(t_kernel_row, t_kernel_col) / 10.0);
+            temp.push_back(Eigen::MatrixXd::Random(t_kernel_row, t_kernel_col));
         }
-        
         m_kernel.push_back(temp);
     }
     for (int i = 0; i < t_kernel_number; i++) {

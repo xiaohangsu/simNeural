@@ -24,7 +24,7 @@ public:
         m_outputRow = t_outputRow;
         m_outputCol = t_outputCol;
         output.push_back(Eigen::MatrixXd(m_outputRow, m_outputCol));
-        error = std::vector<Eigen::MatrixXd>(m_inputNum, MatrixXd(m_inputRow, m_inputCol));
+        error = std::vector<Eigen::MatrixXd>(m_inputNum, Eigen::MatrixXd(m_inputRow, m_inputCol));
     }
     
     void forward(std::vector<Eigen::MatrixXd> &t_output);

@@ -11,7 +11,7 @@
 void DataToFullLayer::forward(std::vector<Eigen::MatrixXd> &t_input) {
     Eigen::MatrixXd &output = getOutput();
     for (int i = 0; i < m_inputNum; i++) {
-        output.block(i * m_outputRow * m_outputCol, m_outputCol, m_inputRow * m_inputCol, m_outputCol) << Eigen::Map<Eigen::MatrixXd>(t_input[i].data(), t_input[i].size(), m_inputRow * m_inputCol, m_outputCol);
+        output.block(i * m_inputRow * m_inputCol, 0, m_inputRow * m_inputCol, m_outputCol) << Eigen::MatrixXd::Map(t_input[i].data(), m_inputRow * m_inputCol, m_outputCol);
     }
 }
 
@@ -21,7 +21,7 @@ void DataToFullLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd& t_p
     tempError = (t_preTheta.leftCols(t_preTheta.cols() - FCL_BIAS_NUM).transpose()) * t_preError;
     
     for (int i = 0; i < m_inputNum; i++) {
-        error[i] = Eigen::MatrixXd::Map(tempError.block(i * m_inputRow * m_inputCol, m_outputCol, m_inputRow * m_outputCol, m_outputCol).data(), m_inputRow, m_inputCol);
+        error[i] = Eigen::MatrixXd::Map(tempError.block(i * m_inputRow * m_inputCol, 0, m_inputRow * m_outputCol, m_outputCol).data(), m_inputRow, m_inputCol);
     }
     t_activateLayer.deactivate(t_preOutput, error);
 }
