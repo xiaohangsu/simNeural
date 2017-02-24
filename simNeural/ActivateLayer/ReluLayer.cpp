@@ -7,35 +7,45 @@
 //
 
 #include "ReluLayer.hpp"
-#include <iostream>
-ReluLayer::ReluLayer() {
-    
+
+ReluLayer::ReluLayer(const int t_input_row, const int t_input_col, const int t_output_row, const int t_output_col) {
+    m_input_row = t_input_row;
+    m_input_col = t_input_col;
+    m_output_row= t_output_row;
+    m_output_col = t_output_col;
+    m_output = Eigen::MatrixXd(m_output_row, m_output_col);
+    m_error = Eigen::MatrixXd(m_input_row, m_input_col);
 }
 
-void ReluLayer::activate(Eigen::MatrixXd & t_input) {
-    t_input = t_input.array().max(0).matrix();
-
+void ReluLayer::forward(const Eigen::MatrixXd& t_input) {
+    m_output = t_input.array().max(0).matrix();
 }
 
-void ReluLayer::activate(std::vector<Eigen::MatrixXd> &t_input) {
-    for (int i = 0; i < t_input.size(); i++) {
-        ReluLayer::activate(t_input[i]);
-    }
+void ReluLayer::backward(const Eigen::MatrixXd &t_preError) {
+    Eigen::MatrixXd reluReverseValue = m_output.array().max(0).ceil().min(1).matrix();
+    m_error = (t_preError.array() * reluReverseValue.array()).matrix();
 }
 
-void ReluLayer::deactivate(Eigen::MatrixXd &t_output, Eigen::MatrixXd &t_error) {
-    Eigen::MatrixXd reluReverseValue = t_output.array().max(0).ceil().min(1).matrix();
-    t_error = (reluReverseValue.array() * t_error.array()).matrix();
+const Eigen::MatrixXd& ReluLayer::getOutput() {
+    return m_output;
 }
 
-void ReluLayer::deactivate(std::vector<Eigen::MatrixXd> & t_output, std::vector<Eigen::MatrixXd> &t_error) {
-    for (int i = 0; i < t_error.size(); i++) {
-        ReluLayer::deactivate(t_output[i], t_error[i]);
-    }
+const Eigen::MatrixXd& ReluLayer::getError() {
+    return m_error;
 }
 
-void ReluLayer::deactivate(std::vector<Eigen::MatrixXd> &t_error) {
-    for (int i = 0; i < t_error.size(); i++) {
-        t_error[i] = t_error[i].array().max(0).ceil().max(1).matrix();
-    }
+const int ReluLayer::getInputRow() {
+    return m_input_row;
+}
+
+const int ReluLayer::getInputCol() {
+    return m_input_col;
+}
+
+const int ReluLayer::getOutputRow() {
+    return m_output_row;
+}
+
+const int ReluLayer::getOutputCol() {
+    return m_output_col;
 }
