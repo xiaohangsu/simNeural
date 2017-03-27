@@ -13,43 +13,40 @@
 #include <Eigen/Dense>
 #include <vector>
 #include "Layer.hpp"
-#include "ConvolutionalLayer.hpp"
 
 using namespace std;
 using namespace Eigen;
 namespace debug {
-    void printError(Layer layer) {
-        vector<MatrixXd> error = layer.getErrorVec();
-        for (int i = 0; i < error.size(); i++) {
-            cout << "Error :" << i + 1 << endl;
-            cout << error[i] << endl << endl;
-        }
-    }
-    
-    void printOutput(Layer layer) {
-        vector<MatrixXd> output = layer.getOutputVec();
-        for (int i = 0; i < output.size(); i++) {
-            cout << "Output :" << i + 1 << endl;
-            cout << output[i] << endl << endl;
-        }
-    }
-    
-    void printKernel(ConvolutionalLayer layer) {
-        vector<vector<MatrixXd>> kernels = layer.getKernels();
-        for (int i = 0; i < kernels.size(); i++) {
-            for (int j = 0; j < kernels[0].size(); j++) {
-                cout << "(" << i << ", " << j << ")" << endl;
-                cout << kernels[i][j] << endl << endl;
-            }
-        }
-    }
-    
-    
-    void printBasicInfo(Layer layer) {
-        cout << "Layer info :\t" << "InputNum:" << layer.getInputNum() << "\t|\tOutputNum:" << layer.getOutputNum() << endl;
-        cout << "\tBatch:" << layer.getBatch() << "\t|\tCount:" << layer.getCount() << endl;
-        cout << endl;
-    }
+//    void printError(Layer layer) {
+//        for (int i = 0; i < error.size(); i++) {
+//            cout << "Error :" << i + 1 << endl;
+//            cout << error[i] << endl << endl;
+//        }
+//    }
+//    
+//    void printOutput(Layer layer) {
+//        for (int i = 0; i < output.size(); i++) {
+//            cout << "Output :" << i + 1 << endl;
+//            cout << output[i] << endl << endl;
+//        }
+//    }
+//    
+//    void printKernel(ConvolutionalLayer layer) {
+//        vector<vector<MatrixXd>> kernels = layer.getKernels();
+//        for (int i = 0; i < kernels.size(); i++) {
+//            for (int j = 0; j < kernels[0].size(); j++) {
+//                cout << "(" << i << ", " << j << ")" << endl;
+//                cout << kernels[i][j] << endl << endl;
+//            }
+//        }
+//    }
+//    
+//    
+//    void printBasicInfo(Layer layer) {
+//        cout << "Layer info :\t" << "InputNum:" << layer.getInputNum() << "\t|\tOutputNum:" << layer.getOutputNum() << endl;
+//        cout << "\tBatch:" << layer.getBatch() << "\t|\tCount:" << layer.getCount() << endl;
+//        cout << endl;
+//    }
 }
 
 #endif /* DebugTool_h */

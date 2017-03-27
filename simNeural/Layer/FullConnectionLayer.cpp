@@ -7,83 +7,82 @@
 //
 
 #include "FullConnectionLayer.hpp"
-#include "preDefine.h"
-#include "Neural_Algorithms.h"
-#include "SigmoidLayer.hpp"
-#include "ReluLayer.hpp"
-FullConnectionLayer::FullConnectionLayer() : Layer() {
-    
-};
 
-FullConnectionLayer::FullConnectionLayer(const int t_inNumber, const int t_outNumber, const double t_learningRate, const int t_batch) : Layer(t_inNumber, t_outNumber, t_batch) {
+FullConnectionLayer::FullConnectionLayer(
+                                         const int t_input_row,
+                                         const int t_input_col,
+                                         const int t_output_row,
+                                         const int t_output_col,
+                                         const double t_learningRate,
+                                         const int t_batch) : Layer() {
     m_learningRate = t_learningRate;
-    m_row = t_outNumber;
-    m_col = t_inNumber + FCL_BIAS_NUM; // + 1 for bias
-    m_theta = Eigen::MatrixXd::Random(m_row, m_col) / FCL_THETA_RANDOM_DIV;
+    m_input_row = t_input_row;
+    m_input_col = t_input_col;
+    m_output_row = t_output_row;
+    m_output_col = t_output_col;
+    m_batch = t_batch;
+    m_theta = Matrix::Random(m_output_row, m_input_row + FCL_BIAS_NUM) / FCL_THETA_RANDOM_DIV;
+    m_output = Matrix(m_output_row, m_output_col);
+    m_error = Matrix(m_input_row, m_input_col);
+    m_input = Matrix(m_input_row + FCL_BIAS_NUM, m_input_col);
 }
 
-Eigen::MatrixXd& FullConnectionLayer::getTheta() {
+Matrix_cr FullConnectionLayer::getTheta() {
     return m_theta;
+}
+
+Matrix_cr FullConnectionLayer::getOutput() {
+    return m_output;
+}
+
+Matrix_cr FullConnectionLayer::getError() {
+    return m_error;
 }
 
 //
 // input = t_input + bias
 // forward computing: Theta * input -> output
 //
-void FullConnectionLayer::forward(Eigen::MatrixXd &t_input) {
-    Eigen::MatrixXd& output = getOutput();
-    Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());
-    input << t_input, input.row(m_col - FCL_BIAS_NUM).setOnes();
-
-    output = m_theta * input;
-
-    m_activateLayer->activate(output);
-}
-void FullConnectionLayer::backward(Eigen::MatrixXd &t_preError, Eigen::MatrixXd& t_lastTheta) {
-    Eigen::MatrixXd& error = getError();
-    Eigen::MatrixXd& output = getOutput();
+void FullConnectionLayer::forward(Matrix_cr t_input) {
     
-    error = (t_lastTheta.leftCols(t_lastTheta.cols() - FCL_BIAS_NUM).transpose()) * (t_preError);
-    m_activateLayer->deactivate(output, error);
+    m_input << t_input, Matrix(FCL_BIAS_NUM, m_input_col).setOnes();
+    m_output = m_theta * m_input;
 }
 
-void FullConnectionLayer::descentGradient(Eigen::MatrixXd & t_input) {
-    Eigen::MatrixXd& error = getError();
-    
-    Eigen::MatrixXd input = Eigen::MatrixXd(m_col, getBatch());
-    input << t_input, FCL_BIAS_VALUE;
-    m_theta += (m_learningRate * (error * input.transpose()));
-    error.setZero();
+void FullConnectionLayer::backward(Matrix_cr t_preError) {
+    m_error = (m_theta.rightCols(m_input_row).transpose()) * t_preError;
 }
 
-void FullConnectionLayer::backwardForOutputLayer(Eigen::MatrixXd &standOutput) {
-    Eigen::MatrixXd& error = getError();
-    Eigen::MatrixXd& output = getOutput();
-    error = (standOutput - output);
+void FullConnectionLayer::descentGradient(Matrix_cr t_preError) {
+    m_theta += (m_learningRate * (t_preError * m_input.transpose()));
 }
 
-const int FullConnectionLayer::getRow() {
-    return m_row;
+
+const int FullConnectionLayer::getInputRow() {
+    return m_input_row;
 }
 
-const int FullConnectionLayer::getCol() {
-    return m_col;
+
+const int FullConnectionLayer::getInputCol() {
+    return m_input_col;
 }
 
-void FullConnectionLayer::setActivateLayer(ACTIVATE_TYPE t_TYPE) {
-    switch (t_TYPE) {
-        case SIGMOID:
-            m_activateLayer = new SigmoidLayer();
-            break;
-        case RELU:
-            m_activateLayer = new ReluLayer();
-            break;
-        default:
-            break;
-    }
+const int FullConnectionLayer::getOutputRow() {
+    return m_output_row;
 }
 
-ActivateLayer FullConnectionLayer::getActivateLayer() {
-    return *m_activateLayer;
+const int FullConnectionLayer::getOutputCol() {
+    return m_output_col;
 }
 
+const int FullConnectionLayer::getBatch() {
+    return m_batch;
+}
+
+const double FullConnectionLayer::getLearningRate() {
+    return m_learningRate;
+}
+
+void FullConnectionLayer::setLearningRate(const double t_lr) {
+    m_learningRate = t_lr;
+}

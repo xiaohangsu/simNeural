@@ -9,43 +9,21 @@
 #ifndef Layer_hpp
 #define Layer_hpp
 #include <stdio.h>
-#include <Eigen/Dense>
-#include <vector>
+#include "preDefine.h"
 
 class Layer {
 public:
     Layer();
-    Layer(const int t_input, const int t_output, const int t_bacth);
-    Layer(const int t_input, const int t_output, const int t_bacth, const int t_count);
-    Eigen::MatrixXd& getError();
-    Eigen::MatrixXd& getOutput();
-    
-    std::vector<Eigen::MatrixXd>& getErrorVec();
-    std::vector<Eigen::MatrixXd>& getOutputVec();
-    const int getBatch();
-    const int getOutputNum();
-    const int getInputNum();
-    const int getCount();
-    virtual void forward(Eigen::MatrixXd&){};
-    virtual void backward(Eigen::MatrixXd& preError, Eigen::MatrixXd& lastTheta){};
-    virtual void descentGradient(Eigen::MatrixXd&){};
+    virtual void forward(Matrix_cr){};
+    virtual void backward(Matrix_cr preError, Matrix_cr lastTheta){};
+    virtual void descentGradient(Matrix_cr t_preError){};
     
     // batch virtual function
-    virtual void forward(std::vector<Eigen::MatrixXd>&){};
-    virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta){};
-    
-    virtual void descentGradient(std::vector<Eigen::MatrixXd>&){};
-    
-
+    virtual void forward(vec_Matrix_cr){};
+    virtual void backward(vec_Matrix_cr preError, vec_Matrix_cr lastTheta){};
+    virtual void descentGradient(vec_Matrix_cr){};
     virtual void descentGradient(){};
-private:
-    int m_inputNum;
-    int m_outputNum;
-    int m_batch;
-    int m_count;
-    std::vector<Eigen::MatrixXd> m_output;
-    std::vector<Eigen::MatrixXd> m_error;
-    
+
 };
 
 #endif /* Layer_hpp */
