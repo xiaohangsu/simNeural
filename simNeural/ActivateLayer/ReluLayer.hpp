@@ -14,11 +14,15 @@
 
 class ReluLayer : public Layer {
 public:
-    ReluLayer(const int t_input_row, const int t_input_col, const int t_output_row, const int t_output_col);
-    virtual void forward(const Eigen::MatrixXd&);
-    virtual void backward(const Eigen::MatrixXd&);
-    const Eigen::MatrixXd& getError();
-    const Eigen::MatrixXd& getOutput();
+    ReluLayer(
+              const int t_input_row,
+              const int t_input_col,
+              const int t_output_row,
+              const int t_output_col);
+    virtual void forward(Matrix_cr);
+    virtual void backward(Matrix_cr);
+    Matrix_cr getError();
+    Matrix_cr getOutput();
     const int getInputRow();
     const int getInputCol();
     const int getOutputRow();
@@ -28,8 +32,8 @@ private:
     int m_input_col;
     int m_output_row;
     int m_output_col;
-    Eigen::MatrixXd m_error;
-    Eigen::MatrixXd m_output;
+    Matrix m_error;
+    Matrix m_output;
 };
 
 #endif /* ReluLayer_hpp */
