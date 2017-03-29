@@ -33,14 +33,6 @@ void OutputLayer::gradientDescent() {
     
 }
 
-Matrix_cr OutputLayer::getOutput() {
-    return m_output;
-}
-
-Matrix_cr OutputLayer::getError() {
-    return m_error;
-}
-
 const int OutputLayer::getInputRow() {
     return m_input_row;
 }

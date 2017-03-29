@@ -30,14 +30,6 @@ void SigmoidLayer::backward(Matrix_cr t_preError) {
     m_error = ((t_preError.array()) * (m_output.array())).matrix();
 }
 
-Matrix_cr SigmoidLayer::getOutput() {
-    return m_output;
-}
-
-Matrix_cr SigmoidLayer::getError() {
-    return m_error;
-}
-
 const int SigmoidLayer::getInputRow() {
     return m_input_row;
 }

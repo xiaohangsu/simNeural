@@ -21,19 +21,18 @@ public:
     virtual void forward(Matrix_cr);
     virtual void backward(Matrix_cr);
     virtual void gradientDescent();
+    virtual LAYER_TYPE getType() {
+        return OUT_LAYER;
+    }
     const int getInputRow();
     const int getInputCol();
     const int getOutputRow();
     const int getOutputCol();
-    Matrix_cr getOutput();
-    Matrix_cr getError();
 private:
     int m_input_row;
     int m_input_col;
     int m_output_row;
     int m_output_col;
-    Matrix m_output;
-    Matrix m_error;
 };
 
 #endif /* OutputLayer_hpp */

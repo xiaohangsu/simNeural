@@ -23,6 +23,9 @@ public:
     virtual void forward(Matrix_cr input);
     virtual void backward(Matrix_cr preError);
     virtual void descentGradient(Matrix_cr preError);
+    virtual LAYER_TYPE getType() {
+        return FULL_CONNECTION;
+    }
     const int getInputRow();
     const int getInputCol();
     const int getOutputRow();
@@ -30,14 +33,7 @@ public:
     const int getBatch();
     const double getLearningRate();
     void setLearningRate(const double t_lr);
-    Matrix_cr getTheta();
-    Matrix_cr getOutput();
-    Matrix_cr getError();
 private:
-    Matrix m_theta;
-    Matrix m_error;
-    Matrix m_output;
-    Matrix m_input;
     int m_input_row;
     int m_input_col;
     int m_output_row;

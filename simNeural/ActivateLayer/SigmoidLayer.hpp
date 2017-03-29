@@ -21,15 +21,15 @@ public:
                  const int t_output_col);
     virtual void forward(Matrix_cr);
     virtual void backward(Matrix_cr);
-    Matrix_cr getError();
-    Matrix_cr getOutput();
+    virtual LAYER_TYPE getType() {
+        return ACTIVATE;
+    }
+    
     const int getInputRow();
     const int getInputCol();
     const int getOutputRow();
     const int getOutputCol();
 private:
-    Matrix m_error;
-    Matrix m_output;
     int m_input_row;
     int m_input_col;
     int m_output_row;

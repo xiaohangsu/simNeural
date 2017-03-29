@@ -22,6 +22,9 @@ public:
     virtual void forward(std::vector<Eigen::MatrixXd>&, int);
     virtual void backward(std::vector<Eigen::MatrixXd>& preError, Eigen::MatrixXd& lastTheta);
     virtual void descentGradient(std::vector<Eigen::MatrixXd>&);
+    virtual LAYER_TYPE getType() {
+        return FULL_CONNECTION;
+    }
     const int getRow();
     const int getCol();
     const int getKernelNum();

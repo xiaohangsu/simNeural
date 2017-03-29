@@ -30,14 +30,6 @@ void ReluLayer::backward(Matrix_cr t_preError) {
     m_error = (t_preError.array() * reluReverseValue.array()).matrix();
 }
 
-Matrix_cr ReluLayer::getOutput() {
-    return m_output;
-}
-
-Matrix_cr ReluLayer::getError() {
-    return m_error;
-}
-
 const int ReluLayer::getInputRow() {
     return m_input_row;
 }

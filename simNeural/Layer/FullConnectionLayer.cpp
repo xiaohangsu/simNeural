@@ -27,18 +27,6 @@ FullConnectionLayer::FullConnectionLayer(
     m_input = Matrix(m_input_row + FCL_BIAS_NUM, m_input_col);
 }
 
-Matrix_cr FullConnectionLayer::getTheta() {
-    return m_theta;
-}
-
-Matrix_cr FullConnectionLayer::getOutput() {
-    return m_output;
-}
-
-Matrix_cr FullConnectionLayer::getError() {
-    return m_error;
-}
-
 //
 // input = t_input + bias
 // forward computing: Theta * input -> output

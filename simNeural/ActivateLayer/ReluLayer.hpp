@@ -21,8 +21,10 @@ public:
               const int t_output_col);
     virtual void forward(Matrix_cr);
     virtual void backward(Matrix_cr);
-    Matrix_cr getError();
-    Matrix_cr getOutput();
+    virtual LAYER_TYPE getType() {
+        return ACTIVATE;
+    }
+    
     const int getInputRow();
     const int getInputCol();
     const int getOutputRow();
@@ -32,8 +34,6 @@ private:
     int m_input_col;
     int m_output_row;
     int m_output_col;
-    Matrix m_error;
-    Matrix m_output;
 };
 
 #endif /* ReluLayer_hpp */
