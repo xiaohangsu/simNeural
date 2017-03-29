@@ -9,24 +9,26 @@
 #ifndef Net_hpp
 #define Net_hpp
 
-#include <stdio.h>
 #include <vector>
 #include "FullConnectionLayer.hpp"
+#include "ReluLayer.hpp"
+#include "SigmoidLayer.hpp"
+#include "OutputLayer.hpp"
 
 class Net {
 public:
     Net();
     Net(const std::vector<int>&, const int, const double);
-    void forward(const Eigen::MatrixXd& t_input);
-    void backward(const Eigen::MatrixXd& t_standardOutput);
-    void gradientDescend();
-    
+    void forward(Matrix_crr t_input);
+    void backward(Matrix_crr t_standardOutput);
+    void descendGraident();
+    Matrix_cr getOutput();
     void setBatch(const int t_batch);
     void setLearningRate(const double t_rate);
 private:
     int m_batch;
     double m_learningRate;
-    std::vector<Layer> m_layers;
+    std::vector<Layer*> m_layers;
 };
 
 #endif /* Net_hpp */
