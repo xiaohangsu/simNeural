@@ -10,8 +10,8 @@
 #define Net_hpp
 
 #include <vector>
-#include "FullConnectionLayer.hpp"
-#include "ReluLayer.hpp"
+#include "Layer/FullConnectionLayer.hpp"
+#include "ActivateLayer/ReluLayer.hpp"
 #include "SigmoidLayer.hpp"
 #include "OutputLayer.hpp"
 
@@ -19,8 +19,8 @@ class Net {
 public:
     Net();
     Net(const std::vector<int>&, const int, const double);
-    void forward(Matrix_crr t_input);
-    void backward(Matrix_crr t_standardOutput);
+    void forward(Matrix_cr t_input);
+    void backward(Matrix_cr t_standardOutput);
     void descendGraident();
     Matrix_cr getOutput();
     void setBatch(const int t_batch);

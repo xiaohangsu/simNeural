@@ -8,16 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		824EB8FB1F54F6EB00DB1865 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB8FA1F54F6EB00DB1865 /* main.cpp */; };
+		824EB9091F54F79E00DB1865 /* Net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB9051F54F79E00DB1865 /* Net.cpp */; };
+		824EB9331F55200100DB1865 /* FullConnectionLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB9271F55200100DB1865 /* FullConnectionLayer.cpp */; };
+		824EB9341F55200100DB1865 /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB9291F55200100DB1865 /* Layer.cpp */; };
+		824EB9361F55200100DB1865 /* OutputLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB92D1F55200100DB1865 /* OutputLayer.cpp */; };
+		824EB93E1F55207900DB1865 /* ReluLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB93A1F55207900DB1865 /* ReluLayer.cpp */; };
+		824EB93F1F55207900DB1865 /* SigmoidLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 824EB93C1F55207900DB1865 /* SigmoidLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		824EB8F51F54F6EB00DB1865 /* CopyFiles */ = {
+		824EB8F51F54F6EB00DB1865 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -25,6 +32,30 @@
 /* Begin PBXFileReference section */
 		824EB8F71F54F6EB00DB1865 /* simNeural */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simNeural; sourceTree = BUILT_PRODUCTS_DIR; };
 		824EB8FA1F54F6EB00DB1865 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		824EB9021F54F79E00DB1865 /* CNNet */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CNNet; path = ../../CNNet; sourceTree = "<group>"; };
+		824EB9031F54F79E00DB1865 /* DebugTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugTool.h; path = ../../DebugTool.h; sourceTree = "<group>"; };
+		824EB9051F54F79E00DB1865 /* Net.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Net.cpp; path = ../../Net.cpp; sourceTree = "<group>"; };
+		824EB9061F54F79E00DB1865 /* Net.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Net.hpp; path = ../../Net.hpp; sourceTree = "<group>"; };
+		824EB9071F54F79E00DB1865 /* Neural_Algorithms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Neural_Algorithms.h; path = ../../Neural_Algorithms.h; sourceTree = "<group>"; };
+		824EB9081F54F79E00DB1865 /* preDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = preDefine.h; path = ../../preDefine.h; sourceTree = "<group>"; };
+		824EB9231F55200100DB1865 /* ConvolutionalLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConvolutionalLayer.cpp; path = ../../Layer/ConvolutionalLayer.cpp; sourceTree = "<group>"; };
+		824EB9241F55200100DB1865 /* ConvolutionalLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConvolutionalLayer.hpp; path = ../../Layer/ConvolutionalLayer.hpp; sourceTree = "<group>"; };
+		824EB9251F55200100DB1865 /* DataToFullLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataToFullLayer.cpp; path = ../../Layer/DataToFullLayer.cpp; sourceTree = "<group>"; };
+		824EB9261F55200100DB1865 /* DataToFullLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataToFullLayer.hpp; path = ../../Layer/DataToFullLayer.hpp; sourceTree = "<group>"; };
+		824EB9271F55200100DB1865 /* FullConnectionLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FullConnectionLayer.cpp; path = ../../Layer/FullConnectionLayer.cpp; sourceTree = "<group>"; };
+		824EB9281F55200100DB1865 /* FullConnectionLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FullConnectionLayer.hpp; path = ../../Layer/FullConnectionLayer.hpp; sourceTree = "<group>"; };
+		824EB9291F55200100DB1865 /* Layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Layer.cpp; path = ../../Layer/Layer.cpp; sourceTree = "<group>"; };
+		824EB92A1F55200100DB1865 /* Layer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Layer.hpp; path = ../../Layer/Layer.hpp; sourceTree = "<group>"; };
+		824EB92B1F55200100DB1865 /* MeanPoolingLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeanPoolingLayer.cpp; path = ../../Layer/MeanPoolingLayer.cpp; sourceTree = "<group>"; };
+		824EB92C1F55200100DB1865 /* MeanPoolingLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MeanPoolingLayer.hpp; path = ../../Layer/MeanPoolingLayer.hpp; sourceTree = "<group>"; };
+		824EB92D1F55200100DB1865 /* OutputLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OutputLayer.cpp; path = ../../Layer/OutputLayer.cpp; sourceTree = "<group>"; };
+		824EB92E1F55200100DB1865 /* OutputLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OutputLayer.hpp; path = ../../Layer/OutputLayer.hpp; sourceTree = "<group>"; };
+		824EB92F1F55200100DB1865 /* PoolingLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PoolingLayer.cpp; path = ../../Layer/PoolingLayer.cpp; sourceTree = "<group>"; };
+		824EB9301F55200100DB1865 /* PoolingLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PoolingLayer.hpp; path = ../../Layer/PoolingLayer.hpp; sourceTree = "<group>"; };
+		824EB93A1F55207900DB1865 /* ReluLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReluLayer.cpp; path = ../../ActivateLayer/ReluLayer.cpp; sourceTree = "<group>"; };
+		824EB93B1F55207900DB1865 /* ReluLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ReluLayer.hpp; path = ../../ActivateLayer/ReluLayer.hpp; sourceTree = "<group>"; };
+		824EB93C1F55207900DB1865 /* SigmoidLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SigmoidLayer.cpp; path = ../../ActivateLayer/SigmoidLayer.cpp; sourceTree = "<group>"; };
+		824EB93D1F55207900DB1865 /* SigmoidLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SigmoidLayer.hpp; path = ../../ActivateLayer/SigmoidLayer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +88,49 @@
 		824EB8F91F54F6EB00DB1865 /* simNeural */ = {
 			isa = PBXGroup;
 			children = (
+				824EB9391F55206500DB1865 /* ActivateLayer */,
+				824EB9381F55200D00DB1865 /* Layer */,
 				824EB8FA1F54F6EB00DB1865 /* main.cpp */,
+				824EB9021F54F79E00DB1865 /* CNNet */,
+				824EB9031F54F79E00DB1865 /* DebugTool.h */,
+				824EB9051F54F79E00DB1865 /* Net.cpp */,
+				824EB9061F54F79E00DB1865 /* Net.hpp */,
+				824EB9071F54F79E00DB1865 /* Neural_Algorithms.h */,
+				824EB9081F54F79E00DB1865 /* preDefine.h */,
 			);
 			path = simNeural;
+			sourceTree = "<group>";
+		};
+		824EB9381F55200D00DB1865 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				824EB9231F55200100DB1865 /* ConvolutionalLayer.cpp */,
+				824EB9241F55200100DB1865 /* ConvolutionalLayer.hpp */,
+				824EB9251F55200100DB1865 /* DataToFullLayer.cpp */,
+				824EB9261F55200100DB1865 /* DataToFullLayer.hpp */,
+				824EB9271F55200100DB1865 /* FullConnectionLayer.cpp */,
+				824EB9281F55200100DB1865 /* FullConnectionLayer.hpp */,
+				824EB9291F55200100DB1865 /* Layer.cpp */,
+				824EB92A1F55200100DB1865 /* Layer.hpp */,
+				824EB92B1F55200100DB1865 /* MeanPoolingLayer.cpp */,
+				824EB92C1F55200100DB1865 /* MeanPoolingLayer.hpp */,
+				824EB92D1F55200100DB1865 /* OutputLayer.cpp */,
+				824EB92E1F55200100DB1865 /* OutputLayer.hpp */,
+				824EB92F1F55200100DB1865 /* PoolingLayer.cpp */,
+				824EB9301F55200100DB1865 /* PoolingLayer.hpp */,
+			);
+			name = Layer;
+			sourceTree = "<group>";
+		};
+		824EB9391F55206500DB1865 /* ActivateLayer */ = {
+			isa = PBXGroup;
+			children = (
+				824EB93A1F55207900DB1865 /* ReluLayer.cpp */,
+				824EB93B1F55207900DB1865 /* ReluLayer.hpp */,
+				824EB93C1F55207900DB1865 /* SigmoidLayer.cpp */,
+				824EB93D1F55207900DB1865 /* SigmoidLayer.hpp */,
+			);
+			name = ActivateLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,7 +142,7 @@
 			buildPhases = (
 				824EB8F31F54F6EB00DB1865 /* Sources */,
 				824EB8F41F54F6EB00DB1865 /* Frameworks */,
-				824EB8F51F54F6EB00DB1865 /* CopyFiles */,
+				824EB8F51F54F6EB00DB1865 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -120,7 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				824EB93E1F55207900DB1865 /* ReluLayer.cpp in Sources */,
+				824EB93F1F55207900DB1865 /* SigmoidLayer.cpp in Sources */,
 				824EB8FB1F54F6EB00DB1865 /* main.cpp in Sources */,
+				824EB9341F55200100DB1865 /* Layer.cpp in Sources */,
+				824EB9331F55200100DB1865 /* FullConnectionLayer.cpp in Sources */,
+				824EB9361F55200100DB1865 /* OutputLayer.cpp in Sources */,
+				824EB9091F54F79E00DB1865 /* Net.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +297,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 55V2EP36R3;
+				HEADER_SEARCH_PATHS = /usr/local/include/eigen3/;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -228,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 55V2EP36R3;
+				HEADER_SEARCH_PATHS = /usr/local/include/eigen3/;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -251,6 +330,7 @@
 				824EB9001F54F6EB00DB1865 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

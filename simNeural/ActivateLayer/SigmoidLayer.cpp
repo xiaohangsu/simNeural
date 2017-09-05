@@ -26,8 +26,8 @@ void SigmoidLayer::forward(Matrix_cr t_input) {
 }
 
 void SigmoidLayer::backward(Matrix_cr t_preError) {
-    m_output = (m_output.array() * (1 - m_output.array())).matrix();
-    m_error = ((t_preError.array()) * (m_output.array())).matrix();
+    Matrix sigmoidReverseValue = (m_output.array() * (1 - m_output.array())).matrix();
+    m_error = ((t_preError.array()) * (sigmoidReverseValue.array())).matrix();
 }
 
 const int SigmoidLayer::getInputRow() {

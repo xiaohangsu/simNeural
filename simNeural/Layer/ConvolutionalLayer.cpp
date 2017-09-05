@@ -11,7 +11,8 @@
 #include "SigmoidLayer.hpp"
 
 #include <iostream>
-ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCol, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch) : Layer(t_inputRow - t_kernel_row + 1, t_inputCol - t_kernel_col + 1, t_batch, t_kernel_number) {
+ConvolutionalLayer::ConvolutionalLayer(const int t_inputRow, const int t_inputCol, const int t_inputNumber, const int t_kernel_number, const int t_kernel_row, const int t_kernel_col, double t_lr, int t_batch)
+    : Layer(t_inputRow - t_kernel_row + 1, t_inputCol - t_kernel_col + 1, t_batch, t_kernel_number) {
     m_row = t_inputRow;
     m_col = t_inputCol;
     m_kernel_row = t_kernel_row;

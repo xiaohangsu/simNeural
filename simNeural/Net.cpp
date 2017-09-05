@@ -15,14 +15,15 @@ Net::Net() {
     m_layers.push_back(new ReluLayer(100, 1, 100, 1));
     m_layers.push_back(new FullConnectionLayer(100, 1, 10, 1, 0.001, 1));
     m_layers.push_back(new ReluLayer(10, 1, 10, 1));
-    m_layers.push_back(new  OutputLayer(10, 1, 10, 1));
+    m_layers.push_back(new OutputLayer(10, 1, 10, 1));
 };
 
 Net::Net(const std::vector<int>& t_params, const int t_batch, const double t_lr) {
+
 }
 
 
-void Net::forward(Matrix_crr t_input) {
+void Net::forward(Matrix_cr t_input) {
     assert(m_layers.size() > 2);
     int i = 0;
     Matrix input = t_input;
@@ -45,8 +46,8 @@ void Net::forward(Matrix_crr t_input) {
     }
 }
 
-void Net::backward(Matrix_crr t_standardOutput) {
-    int i = m_layers.size() - 1;
+void Net::backward(Matrix_cr t_standardOutput) {
+    long i = m_layers.size() - 1;
     Matrix error = t_standardOutput;
     while (i >= 0) {
         switch (m_layers[i]->getType()) {
@@ -68,7 +69,7 @@ void Net::backward(Matrix_crr t_standardOutput) {
 }
 
 void Net::descendGraident() {
-    int i = m_layers.size() - 1;
+    long i = m_layers.size() - 1;
     while (i >= 0) {
         switch (m_layers[i]->getType()) {
             case FULL_CONNECTION:
@@ -82,7 +83,11 @@ void Net::descendGraident() {
 }
 
 Matrix_cr Net::getOutput() {
-    return m_layers.back()->getOutput();
+    if (m_layers.back()->getType() == OUT_LAYER) {
+        return m_layers.back()->getOutput();
+    } else {
+        throw "Net Last Layer is not an output layer.";
+    }
 }
 
 void Net::setBatch(const int t_batch) {
